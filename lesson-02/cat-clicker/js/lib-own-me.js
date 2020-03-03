@@ -1,5 +1,4 @@
     var model = {
-        currentItem: null,        
         init: function(){
             localStorage.items = JSON.stringify([
                 {
@@ -20,23 +19,15 @@
                     clickCount: 0,
                     pictureFileName: 'cat3.jpg'
                 }]
-            )
-            
-            if(this.currentItem == null){
-                this.currentItem = this.getItemByIndex(0)
-            }
+            )            
         },
         getAllItems: function(){
             return JSON.parse(localStorage.items)
         },
-        getItemByIndex: function(index){
-            return this.getAllItems()[index]
-        },
-
         getItemById: function(itemId){
             return this.getAllItems().filter(item => item.id == itemId)[0]
         }, 
-        updateItem: function(item){
+        updateItemById: function(item){
             let itemsChanged = this.getAllItems()
             itemsChanged.map(iItem =>{
                 if(iItem.id == item.id){
@@ -53,25 +44,16 @@ var octopus = {
         itemsView.init()
         itemView.init()
     },
-
-    getCurrentItem: function(){
-        return model.currentItem
-    },
-
-    setCurrentItem: function(item) {
-        model.currentItem = item;
-    },
-
     getItems: function(){
         return model.getAllItems()
     },
     getItem: function(itemId){
         return model.getItemById(itemId)
     },
-    addItemClickCount: function(){
-        model.currentItem.clickCount++
-        model.updateItem(model.currentItem)
-        itemView.render()
+    addItemClickCount: function(item){
+        item.clickCount = parseInt(item.clickCount) + 1
+        model.updateItemById(item)
+        itemView.render(item.id)
     }
 }
 
@@ -87,12 +69,9 @@ var itemsView = {
             let itemLi = document.createElement("li");
             itemLi.innerText = item.catName;
             itemLi.classList.add('item')
-            itemLi.addEventListener('click', (function(cat){
-                return function () {
-                    octopus.setCurrentItem(cat)
-                    itemView.render()
-                }
-            })(item))
+            itemLi.addEventListener('click', function(){
+                itemView.render(item.id)
+            })
             this.items.append(itemLi);
         });
     }
@@ -104,15 +83,25 @@ var itemView = {
         this.catName = $('#catName')
         this.clickCount = $('#clickCount')
         this.catPicture = $('#catPicture')
-        this.catPicture.on('click', octopus.addItemClickCount)    
         this.render()
     },
 
-    render: function(){
-        let cat = octopus.getCurrentItem()                 
-        this.catName.text(cat.catName)
-        this.clickCount.text(cat.clickCount)
-        this.catPicture.attr('src' , `images/${cat.pictureFileName}`)
+    render: function(catId){
+        var listener;
+        if(catId){
+            let cat = octopus.getItem(catId)                       
+            this.catName.text(cat.catName)
+            this.clickCount.text(cat.clickCount)
+            this.catPicture.attr('src' , `images/${cat.pictureFileName}`)
+            this.catPicture.off('click', listener)
+            listener = function(){
+                octopus.addItemClickCount(cat)
+            }
+            this.catPicture.on('click', listener)                                 
+        }else{
+            this.catName.text('')
+            this.clickCount.text()
+        }
     }
 }
 
