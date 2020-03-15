@@ -13,9 +13,55 @@ img {
     color:#483D8B;
 }
 
+label {
+    display: block;
+    margin: 3px;
+}
+
+input {
+    margin-left: 7px;
+}
+
+.label-name{
+    text-align: left;
+    display: inline-block;
+    width: 50px;
+}
+
 .box {
     text-align: center;
-    vertical-align: top;    
+    vertical-align: top;  
+    box-sizing: border-box;  
+}
+
+.btn-admin-area{
+    border: 1px solid white;
+    padding: 5px;
+    display: inline-block;
+    width: 100px;
+    box-sizing: border-box;
+    overflow: auto;    
+    text-align: center;
+    vertical-align: top;
+}
+
+.box-admin-form{
+    border: 1px solid white;
+    padding: 5px;
+    display: none;
+    width: 275px;
+    
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+.box-admin-area{
+    width: 800px; 
+    margin: 10px auto;
+    padding: 10px;
+    display: block;
+    box-sizing: border-box;
+    text-align: left !important;
 }
 
 .box-items-list {
@@ -25,6 +71,7 @@ img {
     margin: 10px auto;
     background-color:#00BFFF;
     overflow: auto;
+    box-sizing: border-box;
     
 }
 
@@ -38,6 +85,7 @@ img {
     margin: 10px auto;
     background-color:#ADFF2F;
     overflow: auto;
+    box-sizing: border-box;
 }
 
 ul.items-list {

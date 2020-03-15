@@ -26,7 +26,20 @@
                     <img id="catPicture" alt="cat image" class="portrait">
                 </div>                
             </div>
+            <div class="box-admin-area">
+                <div class="btn-admin-area">
+                    <button type="button" id="btn-admin">Admin</button>
+                </div>
+                <div class="box-admin-form">
+                    <form>
+                        <label><span class="label-name">Name</span><input name="catName" type="text"></label>                        
+                        <Label><span class="label-name">Clicks</span><input name="clickCount" type="number"></Label>
+                        <label><span class="label-name">File</span><input disabled name="pictureFileName" type="text"></label>
+                        <button type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <script src="js/lib.js"></script>
+        <script src="js/app.js"></script>
     </body>   
 </html>
